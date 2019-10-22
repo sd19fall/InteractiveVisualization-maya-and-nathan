@@ -14,9 +14,10 @@ class Settings():
 		# Ship settings
 		self.ship_image = pygame.image.load('images/ship.png')
 		self.ship_engine_image = pygame.image.load('images/ship_engines.png')
-		self.ship_thrust_factor = 1.5
+		self.ship_thrust_factor = 1
 		self.starting_fuel = 1000
 		self.ship_count = 3
+		self.turn_rate = 10
 
 		# Phaser settings
 		self.bolt_image = pygame.image.load('images/bolts.png')
@@ -28,8 +29,8 @@ class Settings():
 		
 		# Enemy settings
 		self.enemy_count = 10
-		self.enemy_speed = 12
-		self.enemy_time = 20
+		self.enemy_speed = 5
+		self.enemy_time = 10
 
 		# Level one settings
 		self.lvl_1_coefficent = 10

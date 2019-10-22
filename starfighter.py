@@ -8,6 +8,7 @@ from ship import Ship
 from enemies import Enemy
 import game_functions as gf
 from game_stats import GameStats
+import menu
 
 
 def run_game():
@@ -20,7 +21,8 @@ def run_game():
 	screen = pygame.display.set_mode(
 		(sf_settings.screen_width, sf_settings.screen_height))
 	pygame.display.set_caption("STARFIGHTER")
-	
+	pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
 	# Make a ship
 	ship = Ship(sf_settings, screen)
 	
@@ -29,7 +31,6 @@ def run_game():
 	
 	# Make a group for enemies 
 	enemies = Group()
-		
 	
 	# Start the main loop for the game
 	while True:
@@ -41,6 +42,8 @@ def run_game():
 		pygame.display.set_caption("STARFIGHTER Extra Lives Left: " + 
 			str(ship.ships_left - 1)  + '   Score: ' + str(stats.score))
 		gf.check_game_over(stats)
+
+		#menu.main_menu(screen)
 
 
 run_game()

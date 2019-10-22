@@ -42,6 +42,8 @@ def check_events(sf_settings, screen, ship, bolts, enemies):
 		elif event.type == pygame.KEYUP:
 			check_keyup_events(event, ship)
 			
+
+#def menu(sf_settings, screen)
 			
 def fire_bolt(sf_settings, screen, ship, bolts):
 	# Create a new bolt and add it to bolts group

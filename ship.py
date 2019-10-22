@@ -42,10 +42,10 @@ class Ship():
 		
 		# Recalculate angle based on movement flags
 		if self.turn_right:
-			self.angle -= 10
+			self.angle -= sf_settings.turn_rate
 		
 		if self.turn_left:
-			self.angle += 10
+			self.angle += sf_settings.turn_rate
 				
 				
 		# Shuts off engines if no fuel is left
