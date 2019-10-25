@@ -2,6 +2,7 @@ import pygame
 import sys
 import os
 from sf_settings import Settings
+import game_functions as gf
 
 
 # pygame.init()
@@ -38,28 +39,13 @@ font = "Airstream.ttf"
 # clock = pygame.time.Clock()
 # FPS=30
 
-def main_menu(screen):
+def main_menu(screen, sf_settings):
  
     menu=True
     selected="start"
  
     while menu:
-    #     for event in pygame.event.get():
-    #         if event.type==pygame.QUIT:
-    #             pygame.quit()
-    #             quit()
-    #         if event.type==pygame.KEYDOWN:
-    #             if event.key==pygame.K_UP:
-    #                 selected="start"
-    #             elif event.key==pygame.K_DOWN:
-    #                 selected="quit"
-    #             if event.key==pygame.K_RETURN:
-    #                 if selected=="start":
-    #                     print("Start")
-    #                 if selected=="quit":
-    #                     pygame.quit()
-    #                     quit()
- 
+         
         # Main Menu UI
         screen.fill(blue)
         title=text_format("StarFighter", font, 90, yellow)
@@ -77,11 +63,10 @@ def main_menu(screen):
         quit_rect=text_quit.get_rect()
  
         # Main Menu Text
-        screen.blit(title, (settings.screen_width/2 - (title_rect[2]/2), 80))
-        screen.blit(text_start, (screen_width/2 - (start_rect[2]/2), 300))
-        screen.blit(text_quit, (screen_width/2 - (quit_rect[2]/2), 360))
+        screen.blit(title, (sf_settings.screen_width/2 - (title_rect[2]/2), 80))
+        screen.blit(text_start, (sf_settings.screen_width/2 - (start_rect[2]/2), 300))
+        screen.blit(text_quit, (sf_settings.screen_width/2 - (quit_rect[2]/2), 360))
         pygame.display.update()
-        clock.tick(FPS)
         pygame.display.set_caption("Python - Pygame Simple Main Menu Selection")
 
 

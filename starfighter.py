@@ -8,7 +8,6 @@ from ship import Ship
 from enemies import Enemy
 import game_functions as gf
 from game_stats import GameStats
-import menu
 
 
 def run_game():
@@ -35,6 +34,12 @@ def run_game():
 	# Start the main loop for the game
 	while True:
 		gf.check_events(sf_settings, screen, ship, bolts, enemies)
+
+		while sf_settings.menu == True:
+
+			gf.check_events(sf_settings, screen, ship, bolts, enemies)
+			gf.menu_loop(sf_settings, screen)
+
 		ship.update(sf_settings)
 		gf.update_bolts(enemies, bolts, stats)
 		gf.update_enemies(sf_settings, ship, screen, enemies, stats)
@@ -42,8 +47,6 @@ def run_game():
 		pygame.display.set_caption("STARFIGHTER Extra Lives Left: " + 
 			str(ship.ships_left - 1)  + '   Score: ' + str(stats.score))
 		gf.check_game_over(stats)
-
-		#menu.main_menu(screen)
 
 
 run_game()

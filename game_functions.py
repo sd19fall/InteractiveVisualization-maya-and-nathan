@@ -12,15 +12,17 @@ def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies):
 		ship.turn_left = True		
 	elif event.key == pygame.K_UP:
 		ship.forward_thrust = True
-	
 	elif event.key == pygame.K_SPACE:
 		fire_bolt(sf_settings, screen, ship, bolts)
-		
 	elif event.key == pygame.K_e:
 		new_enemy(sf_settings, screen, enemies)
-		
 	elif event.key == pygame.K_q:
 		sys.exit()
+	elif event.key == pygame.K_ESCAPE:
+		if sf_settings.menu == False:
+			sf_settings.menu = True
+		else:
+			sf_settings.menu = False
 
 def check_keyup_events(event, ship):
 	"""Respond to key releases"""
@@ -119,3 +121,35 @@ def check_game_over(stats):
 		sys.exit()
 			
 
+def text_format(message, textFont, textSize, textColor):
+    newFont=pygame.font.Font(textFont, textSize)
+    newText=newFont.render(message, 0, textColor)
+ 
+    return newText
+
+
+def menu_loop(settings, screen):
+
+	#screen.fill(blue)
+	selected="start"
+
+	title=text_format("StarFighter", settings.font, 90, settings.yellow)
+	if selected=="start":
+		text_start=text_format("Start", settings.font, 75, settings.white)
+	else:
+		text_start = text_format("Start", settings.font, 75, settings.black)
+	if selected=="quit":
+		text_quit=text_format("Quit", settings.font, 75, settings.white)
+	else:
+		text_quit = text_format("Quit", settings.font, 75, settings.black)
+
+	title_rect=title.get_rect()
+	start_rect=text_start.get_rect()
+	quit_rect=text_quit.get_rect()
+
+	# Main Menu Text
+	screen.blit(title, (settings.screen_width/2 - (title_rect[2]/2), 80))
+	screen.blit(text_start, (settings.screen_width/2 - (start_rect[2]/2), 300))
+	screen.blit(text_quit, (settings.screen_width/2 - (quit_rect[2]/2), 360))
+	pygame.display.update()
+	pygame.display.set_caption("Python - Pygame Simple Main Menu Selection")

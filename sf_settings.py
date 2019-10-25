@@ -11,6 +11,9 @@ class Settings():
 		self.screen_height = 800
 		self.bg_image = pygame.image.load('images/stars.png')
 
+		self.font = "Airstream.ttf"
+		self.menu = False
+
 		# Ship settings
 		self.ship_image = pygame.image.load('images/ship.png')
 		self.ship_engine_image = pygame.image.load('images/ship_engines.png')
@@ -36,4 +39,13 @@ class Settings():
 		self.lvl_1_coefficent = 10
 		self.lvl_2_coefficent = 15
 		self.lvl_3_coefficent = 20
+
+		# Color settings
+		self.white=(255, 255, 255)
+		self.black=(0, 0, 0)
+		self.gray=(50, 50, 50)
+		self.red=(255, 0, 0)
+		self.green=(0, 255, 0)
+		self.blue=(0, 0, 255)
+		self.yellow=(255, 255, 0)
 
