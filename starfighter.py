@@ -33,9 +33,10 @@ def run_game():
 	# Make a group for enemies 
 	enemies = Group()
 	
+	pygame.mouse.set_visible(False)
 	# Start the main loop for the game
 	while True:
-		gf.check_events(sf_settings, screen, ship, bolts, enemies, menu)
+		gf.check_events(sf_settings, screen, ship, bolts, enemies, menu, stats)
 
 		ship.update(sf_settings)
 		gf.update_bolts(enemies, bolts, stats)
@@ -43,11 +44,15 @@ def run_game():
 		gf.update_screen(sf_settings, screen, ship, enemies, bolts)
 		pygame.display.set_caption("STARFIGHTER Extra Lives Left: " + 
 			str(ship.ships_left - 1)  + '   Score: ' + str(stats.score))
-		gf.check_game_over(stats)
+		gf.check_game_over(sf_settings, screen, menu, ship, enemies, bolts, stats)
 
 		while sf_settings.menu == True:
-			gf.check_events(sf_settings, screen, ship, bolts, enemies, menu)
-			gf.menu_loop(sf_settings, screen, menu)
+			gf.check_events(sf_settings, screen, ship, bolts, enemies, menu, stats)
+			gf.menu_loop(sf_settings, screen, menu, ship, enemies, bolts, stats)
+
+		while stats.game_over == True:
+			gf.check_events(sf_settings, screen, ship, bolts, enemies, menu, stats)
+			gf.game_over(sf_settings, screen, menu, ship, enemies, bolts, stats)
 
 
 run_game()
