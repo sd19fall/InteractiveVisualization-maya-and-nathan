@@ -1,6 +1,6 @@
-##SoftDes MP4:
+## SoftDes MP4:
 
-#STARFIGHTER 
+# STARFIGHTER 
 
 Nathan Weil, Maya Al-Ahmad 2019
 
