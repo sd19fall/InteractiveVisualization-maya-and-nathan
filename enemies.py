@@ -13,7 +13,7 @@ class Enemy(Sprite):
 		self.sf_settings = sf_settings
 		
 		# Load image and set rect attribute
-		self.image = pygame.image.load('images/tie_fighter.png')
+		self.image = self.sf_settings.enemy_image
 		self.rect = self.image.get_rect()
 		
 		# Starting position

@@ -4,7 +4,7 @@ import pygame
 from bolts import Bolt
 from enemies import Enemy
 
-def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies):
+def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies, menu):
 	"""Respond to keypresses"""
 	if event.key == pygame.K_RIGHT:
 		ship.turn_right = True
@@ -12,6 +12,15 @@ def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies):
 		ship.turn_left = True		
 	elif event.key == pygame.K_UP:
 		ship.forward_thrust = True
+		if sf_settings.menu == True:
+			if menu.selected > 0:
+				menu.selected -= 1
+
+	elif event.key == pygame.K_DOWN:
+		if sf_settings.menu == True:
+			if menu.selected < 2:
+				menu.selected += 1
+
 	elif event.key == pygame.K_SPACE:
 		fire_bolt(sf_settings, screen, ship, bolts)
 	elif event.key == pygame.K_e:
@@ -24,6 +33,13 @@ def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies):
 		else:
 			sf_settings.menu = False
 
+	if event.key == pygame.K_RETURN:
+		if menu.selected == 0:
+			sf_settings.menu = False
+		elif menu.selected == 2:
+			sys.exit()
+		
+
 def check_keyup_events(event, ship):
 	"""Respond to key releases"""
 	if event.key == pygame.K_RIGHT:
@@ -34,13 +50,13 @@ def check_keyup_events(event, ship):
 		ship.forward_thrust = False
 		
 		
-def check_events(sf_settings, screen, ship, bolts, enemies):
+def check_events(sf_settings, screen, ship, bolts, enemies, menu):
 	"""Respond to keypresses and mouse events"""
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			sys.exit()
 		elif event.type == pygame.KEYDOWN:
-			check_keydown_events(event, sf_settings, screen, ship, bolts, enemies)
+			check_keydown_events(event, sf_settings, screen, ship, bolts, enemies, menu)
 		elif event.type == pygame.KEYUP:
 			check_keyup_events(event, ship)
 			
@@ -120,7 +136,6 @@ def check_game_over(stats):
 		print('\n\n\tGAME OVER')
 		sys.exit()
 			
-
 def text_format(message, textFont, textSize, textColor):
     newFont=pygame.font.Font(textFont, textSize)
     newText=newFont.render(message, 0, textColor)
@@ -128,28 +143,60 @@ def text_format(message, textFont, textSize, textColor):
     return newText
 
 
-def menu_loop(settings, screen):
+def menu_loop(settings, screen, menu):
 
-	#screen.fill(blue)
-	selected="start"
+	#screen.fill(settings.blue)
 
-	title=text_format("StarFighter", settings.font, 90, settings.yellow)
-	if selected=="start":
-		text_start=text_format("Start", settings.font, 75, settings.white)
+	title = text_format("StarFighter", settings.font, 90, settings.yellow)
+
+	if menu.selected == 0:
+		text_start = text_format("Start", settings.font, 75, settings.white)
 	else:
-		text_start = text_format("Start", settings.font, 75, settings.black)
-	if selected=="quit":
-		text_quit=text_format("Quit", settings.font, 75, settings.white)
+		text_start = text_format("Start", settings.font, 75, settings.gray)
+	if menu.selected == 1:
+		text_theme = text_format(str(settings.theme), settings.font, 75, settings.white)
 	else:
-		text_quit = text_format("Quit", settings.font, 75, settings.black)
+		text_theme = text_format(str(settings.theme), settings.font, 75, settings.gray)
+	if menu.selected == 2:
+		text_quit = text_format("Quit", settings.font, 75, settings.white)
+	else:
+		text_quit = text_format("Quit", settings.font, 75, settings.gray)
 
 	title_rect=title.get_rect()
 	start_rect=text_start.get_rect()
+	theme_rect=text_theme.get_rect()
 	quit_rect=text_quit.get_rect()
 
 	# Main Menu Text
 	screen.blit(title, (settings.screen_width/2 - (title_rect[2]/2), 80))
 	screen.blit(text_start, (settings.screen_width/2 - (start_rect[2]/2), 300))
-	screen.blit(text_quit, (settings.screen_width/2 - (quit_rect[2]/2), 360))
+	screen.blit(text_theme, (settings.screen_width/2 - (theme_rect[2]/2), 360))
+	screen.blit(text_quit, (settings.screen_width/2 - (quit_rect[2]/2), 420))
 	pygame.display.update()
 	pygame.display.set_caption("Python - Pygame Simple Main Menu Selection")
+
+def starwars(settings):
+	settings.bg_image = pygame.image.load('images/stars.png')
+	settings.ship_image = pygame.image.load('images/StarWars/ship.png')
+	settings.ship_engine_image = pygame.image.load('images/StarWars/ship_engines.png')
+	settings.bolt_image = pygame.image.load('images/StarWars/bolts.png')
+	settings.enemy_image = pygame.image.load('images/StarWars/tie_fighter.png')
+
+# def startrek(settings):
+# 	settings.bg_image = pygame.image.load('images/stars.png')
+# 	settings.ship_image = pygame.image.load('images/StarTrek/USSENTERPRISE.png')
+#	settings.bolt_image = pygame.image.load('images/StarTrek/comp and comm.png')
+#	settings.enemy_image = pygame.image.load('images/StarTrek/jupiter.png')
+
+#def harrypotter(settings):
+
+#	settings.bg_image = pygame.image.load('images/Harry/hogwarts.png')
+#	settings.ship_image = pygame.image.load('images/Harry/harry.png')
+#	settings.enemy_image = pygame.image.load('images/Harry/dementor.png') 
+
+#def disney(settings):
+#	settings.bg_image = pygame.image.load('image/Disney/disney.png)
+#	settings.ship_image = pygame.image.load('images/Disney/mickey mouse.png')
+#	settings.enemy_image = pygame.image.load('images/Disney/minnie mouse.png') 
+
+	
