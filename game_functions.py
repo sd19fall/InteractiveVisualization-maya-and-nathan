@@ -4,6 +4,9 @@ import pygame
 from bolts import Bolt
 from enemies import Enemy
 
+from pygame.sprite import Group
+
+
 def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies, menu, stats):
 	"""Respond to keypresses"""
 	if event.key == pygame.K_RIGHT:
@@ -46,7 +49,7 @@ def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies, menu,
 		else:
 			sf_settings.menu = False
 
-	if event.key == pygame.K_RETURN:
+	elif event.key == pygame.K_RETURN:
 		if menu.selected == 0:
 			sf_settings.menu = False
 		elif menu.selected == 1:
@@ -60,7 +63,14 @@ def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies, menu,
 			sys.exit()
 		
 		if stats.game_over == True:
+			ship.ships_left = sf_settings.ship_count
+			stats.reset(sf_settings)
+			enemies.empty()
+			ship.reset(sf_settings, stats)
+			sf_settings.menu = True
 			stats.game_over = False
+
+
 		
 def check_keyup_events(event, ship):
 	"""Respond to key releases"""
@@ -198,13 +208,12 @@ def game_over(settings, screen, menu, ship, enemies, bolts, stats):
 
 	game_over = text_format("Game Over", settings.font, 90, settings.yellow)
 	return_to_menu = text_format("Return", settings.font, 60, settings.white)
-	score = text_format("Score: " + str(stats.score), settings.font, 60, settings.white)
+	score = text_format("Score: " + str(), settings.font, 60, settings.white)
 
 	# Finds centers of text to center in window 
 	go_rect = game_over.get_rect()
 	return_rect = return_to_menu.get_rect()
 	score_rect = score.get_rect()
-
 
 	update_screen(settings, screen, ship, enemies, bolts)
 
@@ -214,6 +223,8 @@ def game_over(settings, screen, menu, ship, enemies, bolts, stats):
 
 	pygame.display.update()
 	pygame.display.set_caption("Python - Pygame Simple Main Menu Selection")
+
+
 
 def starwars(settings):
 	settings.bg_image = pygame.image.load('images/stars.png')
@@ -225,18 +236,23 @@ def starwars(settings):
 def startrek(settings):
 	settings.bg_image = pygame.image.load('images/stars.png')
 	settings.ship_image = pygame.image.load('images/StarTrek/USSENTERPRISE.png')
+	settings.ship_engine_image = pygame.image.load('images/StarTrek/USSENTERPRISE_fire.png')
 	settings.bolt_image = pygame.image.load('images/StarTrek/comp and comm.png')
 	settings.enemy_image = pygame.image.load('images/StarTrek/jupiter.png')
 
 def harrypotter(settings):
 
-	settings.bg_image = pygame.image.load('images/Harry/hogwarts.png')
+	settings.bg_image = pygame.image.load('images/Harry/hogwarts2.png')
 	settings.ship_image = pygame.image.load('images/Harry/harry.png')
+	settings.ship_engine_image = pygame.image.load('images/Harry/harry.png')
+	settings.bolt_image = pygame.image.load('images/Harry/wand.png')
 	settings.enemy_image = pygame.image.load('images/Harry/dementor.png') 
 
-#def disney(settings):
-#	settings.bg_image = pygame.image.load('image/Disney/disney.png)
-#	settings.ship_image = pygame.image.load('images/Disney/mickey mouse.png')
-#	settings.enemy_image = pygame.image.load('images/Disney/minnie mouse.png') 
+def disney(settings):
+	settings.bg_image = pygame.image.load('image/Disney/disney.png')
+	settings.ship_image = pygame.image.load('images/Disney/mickey mouse.png')
+	settings.ship_engine_image = pygame.image.load('images/Disney/mickey mouse.png')
+	settings.bolt_image = pygame.image.load('images/Disney/heart.png')
+	settings.enemy_image = pygame.image.load('images/Disney/minnie mouse.png') 
 
 	

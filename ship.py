@@ -2,6 +2,7 @@ import pygame
 import sys
 from math import sin, cos, radians
 
+
 class Ship():
 	
 	def __init__(self, sf_settings, screen):
@@ -103,3 +104,15 @@ class Ship():
 			self.speed_x = 0
 			
 			self.fuel = sf_settings.starting_fuel
+
+
+	def reset(self, sf_settings, stats):
+					
+		self.rect.centerx = self.screen_rect.centerx
+		self.rect.bottom = self.screen_rect.bottom - 20
+		
+		self.angle = 0
+		self.speed_y = 0
+		self.speed_x = 0
+		
+		self.fuel = sf_settings.starting_fuel

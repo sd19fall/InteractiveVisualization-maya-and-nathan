@@ -17,7 +17,6 @@ def run_game():
 	sf_settings = Settings()
 	stats = GameStats(sf_settings)
 	menu = Menu(sf_settings)
-	#stats.reset_stats()
 	
 	screen = pygame.display.set_mode(
 		(sf_settings.screen_width, sf_settings.screen_height))
@@ -38,6 +37,7 @@ def run_game():
 	while True:
 		gf.check_events(sf_settings, screen, ship, bolts, enemies, menu, stats)
 
+		#stats.reset(sf_settings)
 		ship.update(sf_settings)
 		gf.update_bolts(enemies, bolts, stats)
 		gf.update_enemies(sf_settings, ship, screen, enemies, stats)
