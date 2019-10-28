@@ -41,6 +41,8 @@ def run_game():
 		ship.update(sf_settings)
 		gf.update_bolts(enemies, bolts, stats)
 		gf.update_enemies(sf_settings, ship, screen, enemies, stats)
+		gf.hud(sf_settings, screen, menu, ship, enemies, bolts, stats)
+
 		gf.update_screen(sf_settings, screen, ship, enemies, bolts)
 		pygame.display.set_caption("STARFIGHTER Extra Lives Left: " + 
 			str(ship.ships_left - 1)  + '   Score: ' + str(stats.score))

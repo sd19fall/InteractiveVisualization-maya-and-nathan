@@ -59,6 +59,8 @@ def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies, menu,
 				startrek(sf_settings)
 			if menu.current_theme == 2:
 				harrypotter(sf_settings)
+			if menu.current_theme == 3:
+				disney(sf_settings)
 		elif menu.selected == 2:
 			sys.exit()
 		
@@ -204,11 +206,9 @@ def menu_loop(settings, screen, menu, ship, enemies, bolts, stats):
 
 def game_over(settings, screen, menu, ship, enemies, bolts, stats):
 
-	#screen.fill(settings.blue)
-
 	game_over = text_format("Game Over", settings.font, 90, settings.yellow)
 	return_to_menu = text_format("Return", settings.font, 60, settings.white)
-	score = text_format("Score: " + str(), settings.font, 60, settings.white)
+	score = text_format("Score: " + str(stats.score), settings.font, 60, settings.white)
 
 	# Finds centers of text to center in window 
 	go_rect = game_over.get_rect()
@@ -224,7 +224,19 @@ def game_over(settings, screen, menu, ship, enemies, bolts, stats):
 	pygame.display.update()
 	pygame.display.set_caption("Python - Pygame Simple Main Menu Selection")
 
+def hud(settings, screen, menu, ship, enemies, bolts, stats):
 
+	score = text_format("Score: " + str(stats.score), settings.font, 30, settings.white)
+
+	# Finds centers of text to center in window 
+	score_rect = score.get_rect()
+
+	update_screen(settings, screen, ship, enemies, bolts)
+
+	screen.blit(score, (settings.screen_width/2 - (score_rect[2]/2), 320))
+
+	#pygame.display.update()
+	#pygame.display.set_caption("Python - Pygame Simple Main Menu Selection")
 
 def starwars(settings):
 	settings.bg_image = pygame.image.load('images/stars.png')
