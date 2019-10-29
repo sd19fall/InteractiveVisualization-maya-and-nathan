@@ -2,7 +2,7 @@ import pygame
 import sys
 from math import sin, cos, radians
 
-
+""" This is the class that's about the ship (player controlled) """
 class Ship():
 	
 	def __init__(self, sf_settings, screen):

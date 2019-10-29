@@ -9,6 +9,7 @@ class GameStats():
 		self.score = 0
 		self.enemy_time = 0
 		self.game_over = False
+		self.count = 0
 	
 	def reset(self, sf_settings):
 		"""Initialize or Reset statistics that can change during game"""
@@ -16,6 +17,7 @@ class GameStats():
 		self.score = 0
 		self.enemy_time = 0
 		self.game_over = False
+		self.count = 0
 
 
 

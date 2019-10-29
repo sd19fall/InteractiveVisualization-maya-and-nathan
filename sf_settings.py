@@ -36,7 +36,9 @@ class Settings():
 		# Enemy settings
 		self.enemy_image = pygame.image.load('images/StarWars/tie_fighter.png')
 		self.enemy_count = 10
+		self.enemy_speed_initial = 5
 		self.enemy_speed = 5
+		self.enemy_accel = 8
 		self.enemy_time = 10
 
 		# Level one settings

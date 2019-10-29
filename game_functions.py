@@ -66,6 +66,8 @@ def check_keydown_events(event, sf_settings, screen, ship, bolts, enemies, menu,
 		
 		if stats.game_over == True:
 			ship.ships_left = sf_settings.ship_count
+			sf_settings.enemy_speed = sf_settings.enemy_speed_initial
+			stats.count = 0
 			stats.reset(sf_settings)
 			enemies.empty()
 			ship.reset(sf_settings, stats)
@@ -153,6 +155,7 @@ def update_enemies(sf_settings, ship, screen, enemies, stats):
 		ship.ship_hit(sf_settings, stats)
 		
 def check_game_over(sf_settings, screen, menu, ship, enemies, bolts, stats): 
+	""" Checks when game is truly over """
 	if stats.game_over == True:
 		print('\n\n\tFinal Score -  ' + str(stats.score) + '\n')
 		
@@ -175,9 +178,7 @@ def text_format(message, textFont, textSize, textColor):
     return newText
 
 def menu_loop(settings, screen, menu, ship, enemies, bolts, stats):
-
-	#screen.fill(settings.blue)
-
+	""" Menu Screen """
 	title = text_format("StarFighter", settings.font, 90, settings.yellow)
 
 	if menu.selected == 0:
@@ -200,7 +201,7 @@ def menu_loop(settings, screen, menu, ship, enemies, bolts, stats):
 	quit_rect = text_quit.get_rect()
 
 	update_screen(settings, screen, ship, enemies, bolts, menu, stats)
-
+	#positioning text
 	screen.blit(title, (settings.screen_width/2 - (title_rect[2]/2), 80))
 	screen.blit(text_start, (settings.screen_width/2 - (start_rect[2]/2), 300))
 	screen.blit(text_theme, (settings.screen_width/2 - (theme_rect[2]/2), 370))
@@ -209,7 +210,7 @@ def menu_loop(settings, screen, menu, ship, enemies, bolts, stats):
 	pygame.display.set_caption("Python - Pygame Simple Main Menu Selection")
 
 def game_over(settings, screen, menu, ship, enemies, bolts, stats):
-
+	""" Game over page """
 	game_over = text_format("Game Over", settings.font, 90, settings.yellow)
 	return_to_menu = text_format("Return", settings.font, 60, settings.white)
 	score = text_format("Score: " + str(stats.score), settings.font, 60, settings.white)
@@ -229,7 +230,7 @@ def game_over(settings, screen, menu, ship, enemies, bolts, stats):
 	pygame.display.set_caption("Python - Pygame Simple Main Menu Selection")
 
 def hud(settings, screen, menu, ship, enemies, bolts, stats):
-
+	""" Displays score while player plays """
 	score = text_format("Score: " + str(stats.score) + '    Ships: ' + str(ship.ships_left), settings.font, 30, settings.white)
 
 	# Finds centers of text to center in window 
@@ -237,33 +238,53 @@ def hud(settings, screen, menu, ship, enemies, bolts, stats):
 
 	screen.blit(score, (settings.screen_width/2 - (score_rect[2]/2), 30))
 
+def difficulty(stats, sf_settings):
+	""" Increases difficulty the longer they play """
+	delta = stats.score - stats.count*sf_settings.enemy_accel
+	if delta == sf_settings.enemy_accel:
+		sf_settings.enemy_speed += 1
+		stats.count += 1
 
-def starwars(settings):
+
+""" The functions below are about changing the themes """
+
+def starwars(settings): 
+	#star wars theme is default
 	settings.bg_image = pygame.image.load('images/stars.png')
 	settings.ship_image = pygame.image.load('images/StarWars/ship.png')
 	settings.ship_engine_image = pygame.image.load('images/StarWars/ship_engines.png')
 	settings.bolt_image = pygame.image.load('images/StarWars/bolts.png')
 	settings.enemy_image = pygame.image.load('images/StarWars/tie_fighter.png')
+	pygame.mixer.music.load('music/StarWars.mp3')
+	pygame.mixer.music.play()
 
 def startrek(settings):
+	#loads images for star trek
 	settings.bg_image = pygame.image.load('images/stars.png')
 	settings.ship_image = pygame.image.load('images/StarTrek/USSENTERPRISE.png')
 	settings.ship_engine_image = pygame.image.load('images/StarTrek/USSENTERPRISE_fire.png')
 	settings.bolt_image = pygame.image.load('images/StarTrek/comp and comm.png')
 	settings.enemy_image = pygame.image.load('images/StarTrek/jupiter.png')
+	pygame.mixer.music.load('music/StarTrek.mp3')
+	pygame.mixer.music.play()
 
 def harrypotter(settings):
+	#loads images for harry potter
 	settings.bg_image = pygame.image.load('images/Harry/hogwarts2.png')
 	settings.ship_image = pygame.image.load('images/Harry/harry.png')
 	settings.ship_engine_image = pygame.image.load('images/Harry/harry.png')
 	settings.bolt_image = pygame.image.load('images/Harry/wand.png')
 	settings.enemy_image = pygame.image.load('images/Harry/dementor.png') 
+	pygame.mixer.music.load('music/Harry.mp3')
+	pygame.mixer.music.play()
 
 def disney(settings):
+	#loads images for disney 
 	settings.bg_image = pygame.image.load('images/Disney/castle.png')
 	settings.ship_image = pygame.image.load('images/Disney/mickey mouse.png')
 	settings.ship_engine_image = pygame.image.load('images/Disney/mickey mouse.png')
 	settings.bolt_image = pygame.image.load('images/Disney/heart.png')
 	settings.enemy_image = pygame.image.load('images/Disney/minnie mouse.png') 
-
+	pygame.mixer.music.load('music/Love.mp3')
+	pygame.mixer.music.play()
 	
