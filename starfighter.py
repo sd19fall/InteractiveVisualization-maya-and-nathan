@@ -86,6 +86,5 @@ def run_game():
 		gf.difficulty(stats, sf_settings)
 
 
-
 run_game()
 
