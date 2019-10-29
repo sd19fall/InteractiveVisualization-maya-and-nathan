@@ -16,3 +16,5 @@ Good luck and happy phasing!
 
 Note:
 The game is derived from the classic arcade game, ASTEROIDS. 
+
+What to do: Install pygame (pip install pygame)! You run the game by running starfighter.py
