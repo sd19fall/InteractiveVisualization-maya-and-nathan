@@ -104,11 +104,15 @@ def new_enemy(sf_settings, screen, enemies):
 		new_enemy = Enemy(sf_settings, screen)
 		enemies.add(new_enemy)
 
-def update_screen(sf_settings, screen, ship, enemies, bolts):
+def update_screen(sf_settings, screen, ship, enemies, bolts, menu, stats):
 	"""Update images on screen and flip to new screen"""
 		
 	# Redraw the screen during each pass through the loop
 	screen.blit(sf_settings.bg_image, [0, 0])
+
+	if stats.game_over == False and sf_settings.menu == False:
+		hud(sf_settings, screen, menu, ship, enemies, bolts, stats)
+
 	for bolt in bolts.sprites():
 		bolt.draw_bolt()
 	for enemy in enemies.sprites():
@@ -195,7 +199,7 @@ def menu_loop(settings, screen, menu, ship, enemies, bolts, stats):
 	theme_rect = text_theme.get_rect()
 	quit_rect = text_quit.get_rect()
 
-	update_screen(settings, screen, ship, enemies, bolts)
+	update_screen(settings, screen, ship, enemies, bolts, menu, stats)
 
 	screen.blit(title, (settings.screen_width/2 - (title_rect[2]/2), 80))
 	screen.blit(text_start, (settings.screen_width/2 - (start_rect[2]/2), 300))
@@ -215,7 +219,7 @@ def game_over(settings, screen, menu, ship, enemies, bolts, stats):
 	return_rect = return_to_menu.get_rect()
 	score_rect = score.get_rect()
 
-	update_screen(settings, screen, ship, enemies, bolts)
+	update_screen(settings, screen, ship, enemies, bolts, menu, stats)
 
 	screen.blit(game_over, (settings.screen_width/2 - (go_rect[2]/2), 100))
 	screen.blit(score, (settings.screen_width/2 - (score_rect[2]/2), 320))
@@ -226,17 +230,13 @@ def game_over(settings, screen, menu, ship, enemies, bolts, stats):
 
 def hud(settings, screen, menu, ship, enemies, bolts, stats):
 
-	score = text_format("Score: " + str(stats.score), settings.font, 30, settings.white)
+	score = text_format("Score: " + str(stats.score) + '    Ships: ' + str(ship.ships_left), settings.font, 30, settings.white)
 
 	# Finds centers of text to center in window 
 	score_rect = score.get_rect()
 
-	update_screen(settings, screen, ship, enemies, bolts)
+	screen.blit(score, (settings.screen_width/2 - (score_rect[2]/2), 30))
 
-	screen.blit(score, (settings.screen_width/2 - (score_rect[2]/2), 320))
-
-	#pygame.display.update()
-	#pygame.display.set_caption("Python - Pygame Simple Main Menu Selection")
 
 def starwars(settings):
 	settings.bg_image = pygame.image.load('images/stars.png')
@@ -253,7 +253,6 @@ def startrek(settings):
 	settings.enemy_image = pygame.image.load('images/StarTrek/jupiter.png')
 
 def harrypotter(settings):
-
 	settings.bg_image = pygame.image.load('images/Harry/hogwarts2.png')
 	settings.ship_image = pygame.image.load('images/Harry/harry.png')
 	settings.ship_engine_image = pygame.image.load('images/Harry/harry.png')
@@ -261,7 +260,7 @@ def harrypotter(settings):
 	settings.enemy_image = pygame.image.load('images/Harry/dementor.png') 
 
 def disney(settings):
-	settings.bg_image = pygame.image.load('image/Disney/disney.png')
+	settings.bg_image = pygame.image.load('images/Disney/castle.png')
 	settings.ship_image = pygame.image.load('images/Disney/mickey mouse.png')
 	settings.ship_engine_image = pygame.image.load('images/Disney/mickey mouse.png')
 	settings.bolt_image = pygame.image.load('images/Disney/heart.png')
